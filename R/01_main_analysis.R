@@ -50,3 +50,22 @@ head(obs)  # View first 5 rows of metadata
 h5file$close()
 
 save(file = "my_analysis.R", list = c("important_function", "other_object"))save(file = "my_analysis.R", list = c("important_function", "other_object"))
+
+r
+system("git add .")
+system('git commit -m "Add analysis and setup files"')
+system("git push origin main")
+
+system("git init")
+
+system("git add .")  # Add all files to the staging area
+
+system('git commit -m "Initial commit with project setup and scripts"')
+
+system('git remote add origin https://github.com/spexster/Plasma_Biomarkers.git')
+
+system('git push -u origin main')
+
+https://github.com/spexster/Plasma_Biomarkers
+
+git init

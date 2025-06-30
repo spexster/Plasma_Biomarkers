@@ -1,0 +1,234 @@
+---
+title: "ImportRawData"
+output: html_document
+date: "2025-06-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+# Import raw data
+
+
+
+```{r}
+install.packages("Seurat")  # For single-cell analysis
+install.packages("SeuratDisk")  # For handling h5ad files
+
+# install.packages("BiocManager")
+library(BiocManager)
+
+# BiocManager::install("hdf5r")  # Required for HDF5 support
+library(hdf5r)
+ 
+# BiocManager::install("zellkonverter")  #
+ 
+# library(zellkonverter)
+ 
+# BiocManager::install("scCustomize")
+ 
+library(scCustomize)
+
+```
+
+# Every time restart R, run setwd and getwd
+
+```{r}
+setwd("C:/Users/farza/Documents/Plasma_Biomarkers")
+
+getwd()
+```
+
+# Load libraries
+
+
+
+
+```{r}
+# Read the .h5ad file
+
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("zellkonverter")
+
+# install.packages("remotes")
+
+
+# Try installing directly from GitHub if Bioconductor fails
+remotes::install_github("theislab/zellkonverter")
+
+
+
+library(zellkonverter)
+
+
+
+
+
+
+
+
+
+
+
+```
+
+# Needed to instal Rtools45 from https://cran.r-project.org/bin/windows/Rtools/rtools45/rtools.html
+# Verify Rtools installation
+
+```{r}
+# Sys.which("make")  # Should return a path like `C:/rtools45/usr/bin/make.exe`
+
+
+```
+
+
+# Verify zellkonverter is working
+```{r}
+# "zellkonverter" %in% installed.packages()[,1] # Check installation, if FALSE, reinstall
+
+# if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# BiocManager::install("zellkonverter")
+
+
+```
+
+# Load libraries
+```{r}
+
+# Load with library() - NOT require()
+# library(zellkonverter)  # Note: No quotes around package name
+
+
+```
+
+
+# It looks like zellkonverter is now properly installed and loaded, but you're still encountering issues. Let's systematically resolve this
+
+# Verify function availability
+
+```{r}
+# Check if the function exists in the namespace
+# exists("readH5AD", where = asNamespace("zellkonverter"))  # Should return TRUE
+```
+
+# Try explicit namespace calling
+```{r}
+
+# Use package::function syntax
+adata <- zellkonverter::readH5AD("data/raw/scRNA-seq_dataset.h5ad")
+
+```
+
+
+# troublshoot
+```{r}
+# Install the binary version (NO compilation needed)
+# install.packages("hdf5r", type = "binary")
+
+
+library(hdf5r)
+
+read_h5ad_simple <- function(file_path) {
+  # Open the file
+  h5ad <- H5File$new(file_path, mode = "r")
+  
+  # Extract the essentials
+  list(
+    counts = as.matrix(h5ad[["X"]][,]),       # Expression matrix
+    cells = as.data.frame(h5ad[["obs"]][,]),   # Cell metadata
+    genes = as.data.frame(h5ad[["var"]][,])    # Gene metadata
+  )
+}
+
+# USE IT LIKE THIS:
+your_data <- read_h5ad_simple("data/raw/scRNA-seq_dataset.h5ad")
+
+
+# See the first 5 cells and genes
+your_data$counts[1:5, 1:5]  
+head(your_data$cells)  
+head(your_data$genes)
+
+library(hdf5r)
+
+# Define the file path (adjust if needed)
+file_path <- "data/raw/scRNA-seq_dataset.h5ad"
+
+# Open the file connection
+h5ad_file <- H5File$new(file_path, mode = "r")
+
+# Extract the data components
+your_data <- list(
+  counts = h5ad_file[["X"]][,],
+  cells = as.data.frame(h5ad_file[["obs"]][,]),
+  genes = as.data.frame(h5ad_file[["var"]][,])
+)
+
+# Close the file connection
+h5ad_file$close_all()
+
+
+# Check object structure
+str(your_data, max.level = 1)
+
+# View counts matrix dimensions
+dim(your_data$counts)
+
+# View first few cell names
+head(rownames(your_data$cells))
+
+# View first few gene names
+head(rownames(your_data$genes))
+
+```
+
+# Import raw data
+
+```{r}
+# adata <- readH5AD("data/raw/scRNA-seq_dataset.h5ad") #did not run as imported above
+
+
+```
+
+
+
+```{r}
+
+# Check your data is loaded correctly
+head(rownames(your_data$genes))
+dim(your_data$counts)
+
+
+```
+
+
+
+
+
+
+
+
+library(zellkonverter)
+```{r}
+# Test with included example file
+# example_file <- system.file("extdata", "krumsiek11.h5ad", package = "zellkonverter")
+# h5ad_data <- readH5AD(example_file)  # Should return SingleCellExperiment object
+
+# Check key components
+# class(h5ad_data)  # Should show "SingleCellExperiment"
+# names(assays(h5ad_data))  # View available assays (usually "X")
+# colData(h5ad_data)[1:3, ]  # Preview cell metadata
+
+```
+
+
+
