@@ -1,0 +1,14 @@
+"cell_type","n_unique"
+"CD4-positive, alpha-beta T cell",0
+"CD8-positive, alpha-beta T cell",0
+"gamma-delta T cell",39
+"regulatory T cell",14
+"naive thymus-derived CD4-positive, alpha-beta T cell",416
+"naive thymus-derived CD8-positive, alpha-beta T cell",2351
+"central memory CD4-positive, alpha-beta T cell",345
+"effector memory CD4-positive, alpha-beta T cell",16
+"central memory CD8-positive, alpha-beta T cell",16
+"effector memory CD8-positive, alpha-beta T cell",193
+"CD4-positive, alpha-beta cytotoxic T cell",88
+"mucosal invariant T cell",59
+"double negative thymocyte",0
